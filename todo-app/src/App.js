@@ -55,30 +55,18 @@ function App() {
       return itemId.id === todoId;
     })
     const newTodoItem = [...todoList]
-    // Cách 2:
-    // const checkedTodoList = {
-    //   ...newTodoItem[todoIndex],
-    //   isChecked: !newTodoItem[todoIndex].isChecked
-    // }
-    // newTodoItem[todoIndex] = checkedTodoList
 
     if (newTodoItem[todoIndex].isChecked === false) {
       newTodoItem[todoIndex].isChecked = true;
-      // setTodoCompleted(newTodoItem)
+       setTodoCompleted(newTodoItem)
 
     } else {
       newTodoItem[todoIndex].isChecked = false;
-      //setTodoActive(newTodoItem)
-
-    }
-
-    setTodoList(newTodoItem)
-    if(newTodoItem[todoIndex].isChecked = true){
-      setTodoCompleted(newTodoItem)
-    }else{
       setTodoActive(newTodoItem)
+
     }
     
+     setTodoList(newTodoItem)
   }
 
   const onUpdateTitle = (updateTitle, id) => {
@@ -93,40 +81,9 @@ function App() {
     // updateTodoList[todoIndex].title = updateTitle;
 
     setTodoList(updateTodoList)
-
-
   }
 
-  const isCheckTodoActive =(todoId)=>{
-    const todoIndex = todoList.findIndex((itemId) => {
-      return itemId.id === todoId;
-    })
-    const newTodoItem = [...todoList]
-    // Cách 2:
-    // const checkedTodoList = {
-    //   ...newTodoItem[todoIndex],
-    //   isChecked: !newTodoItem[todoIndex].isChecked
-    // }
-    // newTodoItem[todoIndex] = checkedTodoList
-
-    if (newTodoItem[todoIndex].isChecked === false) {
-      newTodoItem[todoIndex].isChecked = true;
-      // setTodoCompleted(newTodoItem)
-
-    } else {
-      newTodoItem[todoIndex].isChecked = false;
-      //setTodoActive(newTodoItem)
-
-    }
-
-    setTodoList(newTodoItem)
-    if(newTodoItem[todoIndex].isChecked = true){
-      setTodoCompleted(newTodoItem)
-    }else{
-      setTodoActive(newTodoItem)
-    }
-  }
-
+  
   const onDeleteAll = () => {
     setTodoList("");
     setTodoActive("")
@@ -141,12 +98,11 @@ function App() {
       <Header />
       <Routes>
         <Route path='/' element={<TodoContainer onAddNewTodo={onAddNewTodo} todoList={todoList} onRemoveTodoList={onRemoveTodoList} isCheckTodoList={isCheckTodoList} onUpdateTitle={onUpdateTitle} />} />
-        <Route path='/active' element={<TodoActive onAddNewTodo={onAddNewTodo} todoList={todoList} onRemoveTodoList={onRemoveTodoList} isCheckTodoActive={isCheckTodoActive} onUpdateTitle={onUpdateTitle} todoActive={todoActive} />} />
+        <Route path='/active' element={<TodoActive onAddNewTodo={onAddNewTodo} todoList={todoList} onRemoveTodoList={onRemoveTodoList} isCheckTodoList={isCheckTodoList} onUpdateTitle={onUpdateTitle} todoActive={todoActive} />} />
         <Route path='/completed' element={<TodoCompleted todoList={todoList} onRemoveTodoList={onRemoveTodoList} isCheckTodoList={isCheckTodoList} onUpdateTitle={onUpdateTitle} todoCompleted={todoCompleted} setTodoCompleted={setTodoCompleted} onDeleteAll={onDeleteAll} />} />
       </Routes>
       </main>
       
-
     </div>
   );
 }
