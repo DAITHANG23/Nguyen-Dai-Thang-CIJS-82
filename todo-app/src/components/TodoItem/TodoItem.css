@@ -1,0 +1,32 @@
+.todo-item{
+    display: flex;
+    margin: 30px 200px;
+    background-color: rgb(230, 226, 226);
+    justify-content: space-between;
+    padding: 10px 20px;
+    border-radius: 12px;
+    border: none;
+}
+
+.check-card{
+    background-color: rgb(160, 158, 158);
+}
+
+.todo-item-title{
+    display: flex;
+    gap: 20px;
+}
+
+.todo-func{
+    margin-top: 10px;
+}
+
+.title-todo{
+    font-size: 24px;
+    color:rgba(0, 0, 0, 0.87);
+    padding-top:10px
+}
+
+.check-todo{
+    text-decoration: line-through;
+}
