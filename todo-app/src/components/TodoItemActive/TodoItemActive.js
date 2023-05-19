@@ -1,9 +1,8 @@
 import './TodoItemActive.css'
-import { FaEdit } from "react-icons/fa";
 import { useState,useEffect, useRef } from 'react';
 
 const TodoItemActive = (props) => {
-    const { title, id, isChecked, onRemoveTodoList, isCheckTodoList,  onUpdateTitle, } = props;
+    const { title, id, isChecked, isCheckTodoList,  onUpdateTitle, } = props;
 
     const [isEditing, setIsEditing] = useState(false);
     const [isEditingValue, setIsEditingValue] = useState(title);
@@ -11,10 +10,6 @@ const TodoItemActive = (props) => {
    
     const isStyleTitle = isChecked ? "title-todo check-todo " : "title-todo"
     const isStyleCard = isChecked ? "todo-item check-card" : "todo-item"
-
-    const onEditing = () =>{
-        setIsEditing(true); // change edit 
-    }
 
     const onChangeTitle = (e) =>{
         setIsEditingValue(e.target.value) 

@@ -3,7 +3,7 @@ import TodoItemActive from '../TodoItemActive/TodoItemActive';
 import './TodoListActive.css'
 
 const TodoListActive = (props) =>{
-    const {todoList, onRemoveTodoList, isCheckTodoList, onUpdateTitle, todoActive} = props
+    const { onRemoveTodoList, isCheckTodoList, onUpdateTitle, todoActive} = props
 
     const todoListValid = todoActive && Array.isArray(todoActive);
 
