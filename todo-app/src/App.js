@@ -59,11 +59,11 @@ function App() {
     if (newTodoItem[todoIndex].isChecked === false) {
       newTodoItem[todoIndex].isChecked = true;
        setTodoCompleted(newTodoItem)
-
+       setTodoActive([])
     } else {
       newTodoItem[todoIndex].isChecked = false;
       setTodoActive(newTodoItem)
-
+      setTodoCompleted([])
     }
     
      setTodoList(newTodoItem)
