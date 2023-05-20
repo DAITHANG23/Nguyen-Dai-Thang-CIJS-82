@@ -13,36 +13,24 @@ function App() {
   const [todoActive, setTodoActive] = useState([]);
   const [todoCompleted, setTodoCompleted] = useState([]);
 
-  console.log(todoList)
+  
   useEffect(() => {
-   getLocalStorage();
-  }, [])
+   
+    let todoLocalStorage = JSON.parse(window.localStorage.getItem("todoApp"));
+    setTodoList(todoLocalStorage);
+    // let todoLocalStorageActive = JSON.parse(window.localStorage.getItem("todoApp"));
+    // setTodoList(todoLocalStorageActive);
+    // let todoLocalStorageCompleted = JSON.parse(window.localStorage.getItem("todoApp"));
+    // setTodoList(todoLocalStorageCompleted);
+    
+   },[])
 
   useEffect(() => {
-
     window.localStorage.setItem("todoApp", JSON.stringify(todoList));
-    // window.localStorage.setItem("todoActive", JSON.stringify(todoActive));
-    // window.localStorage.setItem("todoCompleted", JSON.stringify(todoCompleted));
-
+    // window.localStorage.setItem("todoApp", JSON.stringify(todoActive));
+    // window.localStorage.setItem("todoApp", JSON.stringify(todoCompleted));
   }, [todoList])
   
-  const getLocalStorage = () =>{
-    if (window.localStorage.getItem("todoApp") === null) {
-      window.localStorage.setItem("todoApp", JSON.stringify([]))
-    } else {
-      let todoLocalStorage = JSON.parse(window.localStorage.getItem("todoApp"));
-      console.log(todoLocalStorage)
-      setTodoList(todoLocalStorage);
-    }
-
-    // let todoLocalActive = JSON.parse(localStorage.getItem("todoACtive"));
-    // let todoLocalCompleted = JSON.parse(localStorage.getItem("todoCompeted"))
-
-    // setTodoActive(todoLocalActive);
-    // setTodoCompleted(todoLocalCompleted);
-  }
-  
-
   const onAddNewTodo = (todoTitle) => {
     const NewTodoList = {
       title: todoTitle,
@@ -52,7 +40,7 @@ function App() {
 
     const nextTodoList = [...todoList, NewTodoList];
     setTodoList(nextTodoList);
-    setTodoActive(nextTodoList)
+    setTodoActive(nextTodoList.filter((todoItem) => todoItem.isChecked === false))
 
   }
 
@@ -61,8 +49,8 @@ function App() {
       return todoItem.id !== id;
     })
     setTodoList(removeTodoItem);
-    setTodoCompleted(removeTodoItem);
-    setTodoActive(removeTodoItem)
+    setTodoCompleted(removeTodoItem.filter((todoItem)=> todoItem.isChecked === true));
+    setTodoActive(removeTodoItem.filter((todoItem)=> todoItem.isChecked === false))
   }
 
   const isCheckTodoList = (todoId) => {
@@ -96,6 +84,8 @@ function App() {
     // updateTodoList[todoIndex].title = updateTitle;
 
     setTodoList(updateTodoList)
+    setTodoCompleted(updateTodoList.filter((todoItem)=>todoItem.isChecked === true))
+    setTodoActive(updateTodoList.filter((todoItem)=>todoItem.isChecked === false))
   }
 
 
