@@ -75,10 +75,6 @@ function App() {
     setTodoList(updateTodoList)
   }
 
-  const onDeleteAll = () => {
-    setTodoList("");
-  }
-
   return (
     <div className="App">
       <h1 style={{ textAlign: "center", marginTop: "20px" }}>#todo</h1>
@@ -87,7 +83,7 @@ function App() {
         <Routes>
           <Route path='/' element={<TodoContainer onAddNewTodo={onAddNewTodo} todoList={todoList}  isCheckTodoList={isCheckTodoList}/>} />
           <Route path='/active' element={<TodoListActive todoList={todoList} onAddNewTodo={onAddNewTodo} isCheckTodoList={isCheckTodoList} />} />
-          <Route path='/completed' element={<TodoListCompleted todoList={todoList} onRemoveTodoList={onRemoveTodoList} isCheckTodoList={isCheckTodoList} onUpdateTitle={onUpdateTitle} onDeleteAll={onDeleteAll} />} />
+          <Route path='/completed' element={<TodoListCompleted todoList={todoList} onRemoveTodoList={onRemoveTodoList} isCheckTodoList={isCheckTodoList} onUpdateTitle={onUpdateTitle} setTodoList={setTodoList} />} />
         </Routes>
       </main>
 
