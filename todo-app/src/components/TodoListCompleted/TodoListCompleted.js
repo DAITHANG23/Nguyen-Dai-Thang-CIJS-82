@@ -4,8 +4,8 @@ import './TodoListCompleted.css'
 import {FaTrashAlt} from "react-icons/fa"
 
 const TodoListCompleted = (props) =>{
-    const {todoList, onRemoveTodoList, isCheckTodoList, onUpdateTitle, setTodoCompleted, todoCompleted, onDeleteAll } = props
-
+    const {onRemoveTodoList, isCheckTodoList, onUpdateTitle, onDeleteAll, todoList } = props
+    const todoCompleted = todoList.filter(todoItem => todoItem.isChecked)
     const todoListValid = todoCompleted && Array.isArray(todoCompleted);
 
     const todoListElement = todoListValid && todoCompleted.map((todoItem) =>{

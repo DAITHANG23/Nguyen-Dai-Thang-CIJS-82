@@ -5,31 +5,26 @@ import { v4 as uuidv4 } from "uuid";
 import Header from './components/Header/Header';
 import { Routes, Route } from 'react-router-dom'
 import TodoContainer from './components/TodoContainer/TodoContainer';
-import TodoActive from './components/TodoActive/TodoActive';
-import TodoCompleted from './components/TodoCompleted/TodoCompleted';
+import TodoListActive from './components/TodoListActive/TodoListActive'
+import TodoListCompleted from './components/TodoListCompleted/TodoListCompleted';
 
 function App() {
-  const [todoList, setTodoList] = useState([]);
-  const [todoActive, setTodoActive] = useState([]);
-  const [todoCompleted, setTodoCompleted] = useState([]);
-
-  
-  useEffect(() => {
-   
-    let todoLocalStorage = JSON.parse(window.localStorage.getItem("todoApp"));
-    setTodoList(todoLocalStorage);
-    // let todoLocalStorageActive = JSON.parse(window.localStorage.getItem("todoApp"));
-    // setTodoList(todoLocalStorageActive);
-    // let todoLocalStorageCompleted = JSON.parse(window.localStorage.getItem("todoApp"));
-    // setTodoList(todoLocalStorageCompleted);
-    
-   },[])
+  const [todoList, setTodoList] = useState(() => {
+    const todoListStorage = localStorage.getItem("todoApp");
+    return todoListStorage ? JSON.parse(todoListStorage) : [];
+  });
 
   useEffect(() => {
     window.localStorage.setItem("todoApp", JSON.stringify(todoList));
-    // window.localStorage.setItem("todoApp", JSON.stringify(todoActive));
-    // window.localStorage.setItem("todoApp", JSON.stringify(todoCompleted));
   }, [todoList])
+
+  useEffect(() => {
+    const storedTodoList = localStorage.getItem("todoApp");
+    if (storedTodoList) {
+      setTodoList(JSON.parse(storedTodoList));
+    }
+    
+   },[])
   
   const onAddNewTodo = (todoTitle) => {
     const NewTodoList = {
@@ -40,7 +35,6 @@ function App() {
 
     const nextTodoList = [...todoList, NewTodoList];
     setTodoList(nextTodoList);
-    setTodoActive(nextTodoList.filter((todoItem) => todoItem.isChecked === false))
 
   }
 
@@ -49,8 +43,6 @@ function App() {
       return todoItem.id !== id;
     })
     setTodoList(removeTodoItem);
-    setTodoCompleted(removeTodoItem.filter((todoItem)=> todoItem.isChecked === true));
-    setTodoActive(removeTodoItem.filter((todoItem)=> todoItem.isChecked === false))
   }
 
   const isCheckTodoList = (todoId) => {
@@ -68,9 +60,7 @@ function App() {
       // setTodoActive(newTodoItem)
     }
     setTodoList(newTodoItem)
-    setTodoCompleted(todoList.filter((todoItem) => todoItem.isChecked === true))
-    setTodoActive(todoList.filter((todoItem) => todoItem.isChecked === false))
-  }
+ }
 
   const onUpdateTitle = (updateTitle, id) => {
     const todoIndex = todoList.findIndex((itemId) => {
@@ -82,19 +72,12 @@ function App() {
       title: updateTitle
     }
     // updateTodoList[todoIndex].title = updateTitle;
-
     setTodoList(updateTodoList)
-    setTodoCompleted(updateTodoList.filter((todoItem)=>todoItem.isChecked === true))
-    setTodoActive(updateTodoList.filter((todoItem)=>todoItem.isChecked === false))
   }
-
 
   const onDeleteAll = () => {
     setTodoList("");
-    setTodoActive("")
-    setTodoCompleted("")
   }
-
 
   return (
     <div className="App">
@@ -102,9 +85,9 @@ function App() {
       <main style={{ marginLeft: "60px" }}>
         <Header />
         <Routes>
-          <Route path='/' element={<TodoContainer onAddNewTodo={onAddNewTodo} todoList={todoList} onRemoveTodoList={onRemoveTodoList} isCheckTodoList={isCheckTodoList} onUpdateTitle={onUpdateTitle} />} />
-          <Route path='/active' element={<TodoActive onAddNewTodo={onAddNewTodo} todoList={todoList} onRemoveTodoList={onRemoveTodoList} isCheckTodoList={isCheckTodoList} onUpdateTitle={onUpdateTitle} todoActive={todoActive} />} />
-          <Route path='/completed' element={<TodoCompleted todoList={todoList} onRemoveTodoList={onRemoveTodoList} isCheckTodoList={isCheckTodoList} onUpdateTitle={onUpdateTitle} todoCompleted={todoCompleted} setTodoCompleted={setTodoCompleted} onDeleteAll={onDeleteAll} />} />
+          <Route path='/' element={<TodoContainer onAddNewTodo={onAddNewTodo} todoList={todoList}  isCheckTodoList={isCheckTodoList}/>} />
+          <Route path='/active' element={<TodoListActive todoList={todoList} onAddNewTodo={onAddNewTodo} isCheckTodoList={isCheckTodoList} />} />
+          <Route path='/completed' element={<TodoListCompleted todoList={todoList} onRemoveTodoList={onRemoveTodoList} isCheckTodoList={isCheckTodoList} onUpdateTitle={onUpdateTitle} onDeleteAll={onDeleteAll} />} />
         </Routes>
       </main>
 
